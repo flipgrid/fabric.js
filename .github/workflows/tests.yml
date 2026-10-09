@@ -11,7 +11,7 @@ jobs:
   prime-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - name: Install dependencies
         uses: ./.github/actions/cached-install
         with:
@@ -31,7 +31,7 @@ jobs:
         # supported Node.js release schedule: https://nodejs.org/en/about/releases/
         suite: [unit, visual]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - uses: ./.github/actions/cached-install
         with:
           node-version: 18.x
@@ -45,7 +45,7 @@ jobs:
         if: matrix.suite == 'visual'
         run: npm run test:visual:coverage
       - name: Upload test coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
         with:
           name: coverage-${{ matrix.suite }}
           path: .nyc_output/*.json
@@ -61,7 +61,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Unit tests on browser ${{ matrix.target }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - uses: ./.github/actions/cached-install
         with:
           node-version: ${{ matrix.node-version }}
@@ -82,7 +82,7 @@ jobs:
         node-version: [14.x, 16.x, 20.x]
         suite: [unit, visual]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - uses: ./.github/actions/cached-install
         with:
           node-version: ${{ matrix.node-version }}
@@ -95,7 +95,7 @@ jobs:
     name: Jest tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - uses: ./.github/actions/cached-install
         with:
           node-version: 18.x
@@ -103,7 +103,7 @@ jobs:
       - name: Run Jest unit test
         run: npm run test:jest:coverage
       - name: Upload test coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
         with:
           name: coverage-jest
           path: .nyc_output/*.json
@@ -112,7 +112,7 @@ jobs:
     name: Playwright tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - uses: ./.github/actions/cached-install
         with:
           node-version: 18.x
@@ -124,13 +124,13 @@ jobs:
       - name: Run Playwright tests
         run: xvfb-run npm run test:e2e
       - name: Upload Test Output
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
         if: failure()
         with:
           name: e2e-report
           path: ./e2e/test-report/
       - name: Upload Test Coverage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5 # v3.2.1
         with:
           name: coverage-e2e
           path: ./e2e/test-results/**/coverage.json
@@ -139,26 +139,26 @@ jobs:
     name: Coverage reporting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
       - uses: ./.github/actions/cached-install
         with:
           node-version: 18.x
           install-system-deps: false
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: coverage-unit
           path: .nyc_output
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: coverage-visual
           path: .nyc_output
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: coverage-e2e
           path: .nyc_output
       - run: ls -l .nyc_output
       - run: npm run coverage:report
-      - uses: ShaMan123/lcov-reporter-action@v1.1.1
+      - uses: ShaMan123/lcov-reporter-action@2ca3edc14435210c9374fd3c3d891262be4c8200 # v1.1.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           delete-old-comments: true

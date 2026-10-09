@@ -20,7 +20,7 @@ jobs:
     env:
       file: CHANGELOG.md
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
         with:
           fetch-depth: 0
       - name: Check ${{ env.file }}
@@ -39,12 +39,12 @@ jobs:
       next_version: next
       link: '[#${{ github.event.number }}](https://github.com/fabricjs/fabric.js/pull/${{ github.event.number }})'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Update ${{ env.file }} from PR title
         id: update
-        uses: actions/github-script@v6
+        uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         env:
           log: '- ${{ github.event.pull_request.title }} ${{ env.link }}\n'
           prev_log: '- ${{ github.event.changes.title.from }} ${{ env.link }}\n'
@@ -85,7 +85,7 @@ jobs:
             return false;
       - name: Setup node
         if: fromJson(steps.update.outputs.result)
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
         with:
           node-version: 18.x
       - name: Commit & Push
